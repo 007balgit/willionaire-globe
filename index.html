@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Willionaire Globe</title>
   <style>
     html, body {
@@ -14,6 +14,7 @@
   </style>
 </head>
 <body>
+  <!-- Three.js and other libraries -->
   <script src="three.min.js"></script>
   <script src="three-globe.min.js"></script>
   <script src="OrbitControls.js"></script>
@@ -21,54 +22,64 @@
   <script>
     const scene = new THREE.Scene();
 
+    // Camera setup
     const camera = new THREE.PerspectiveCamera();
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     camera.position.z = 300;
 
+    // Renderer setup
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    // Globe
+    // Globe setup
     const Globe = new ThreeGlobe()
       .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
       .pointLat('lat')
       .pointLng('lng')
-      .pointAltitude(() => 0.04)
+      .pointAltitude(0.04)
       .pointRadius(0.5)
       .pointColor(() => 'white');
 
     scene.add(Globe);
 
+    // Data points
     const members = [
       { name: "Will", lat: 13.7563, lng: 100.5018 },
-      { name: "Mahim Haidar", lat: 13.7663, lng: 100.4918 },
       { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
       { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
       { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 }
     ];
     Globe.pointsData(members);
 
-    // Lights
+    // Lighting
     const light = new THREE.AmbientLight(0xffffff);
     scene.add(light);
 
-    // Controls
+    // Orbit controls
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableZoom = true;
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
+    controls.enableRotate = true;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.6;
+    controls.autoRotateSpeed = 0.5;
+    controls.zoomSpeed = 0.8;
 
-    // Animate
+    // Animation loop
     function animate() {
+      requestAnimationFrame(animate);
       controls.update();
       renderer.render(scene, camera);
-      requestAnimationFrame(animate);
     }
+
     animate();
+
+    // Handle resizing
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
   </script>
 </body>
 </html>
