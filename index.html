@@ -17,7 +17,6 @@
   <script src="three.min.js"></script>
   <script src="three-globe.min.js"></script>
   <script src="OrbitControls.js"></script>
-
   <script>
     const scene = new THREE.Scene();
 
@@ -49,19 +48,23 @@
     ];
     globe.pointsData(members);
 
-    // ✅ Orbit controls (drag + zoom + spin)
+    // 🌍 LIGHT
+    const light = new THREE.AmbientLight(0xffffff);
+    scene.add(light);
+
+    // 🎮 CONTROLS
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableZoom = true;
+    controls.enablePan = false;
     controls.autoRotate = true;
     controls.autoRotateSpeed = 0.5;
 
-    // ✅ Animate
+    // 🌀 ANIMATION
     function animate() {
       requestAnimationFrame(animate);
       controls.update();
       renderer.render(scene, camera);
     }
-
     animate();
   </script>
 </body>
