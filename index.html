@@ -12,6 +12,8 @@
       height: 100%;
     }
   </style>
+
+  <!-- Scripts (in the right order) -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three-globe@2.28.1/dist/three-globe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/OrbitControls.min.js"></script>
@@ -19,9 +21,7 @@
 <body>
   <script>
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera();
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 300;
 
     const renderer = new THREE.WebGLRenderer();
@@ -40,8 +40,8 @@
       .pointLat(d => d.lat)
       .pointLng(d => d.lng)
       .pointAltitude(0.04)
-      .pointColor(() => 'white')
-      .pointRadius(0.5);
+      .pointRadius(0.5)
+      .pointColor(() => 'white');
 
     scene.add(globe);
 
@@ -50,7 +50,7 @@
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.5;
+    controls.autoRotateSpeed = 0.6;
     controls.enableZoom = false;
 
     function animate() {
@@ -58,6 +58,7 @@
       controls.update();
       renderer.render(scene, camera);
     }
+
     animate();
   </script>
 </body>
