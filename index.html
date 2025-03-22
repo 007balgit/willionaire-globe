@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,35 +6,56 @@
   <style>
     html, body {
       margin: 0;
-      background: black;
       overflow: hidden;
+      background: #000;
       width: 100%;
       height: 100%;
     }
+    #tooltip {
+      position: absolute;
+      background: white;
+      color: black;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      pointer-events: none;
+      display: none;
+    }
   </style>
+</head>
+<body>
+  <div id="tooltip"></div>
+
+  <!-- Scripts -->
   <script src="three.min.js"></script>
   <script src="three-globe.min.js"></script>
   <script src="OrbitControls.js"></script>
-</head>
-<body>
+
   <script>
+    // Scene and Camera Setup
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera();
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
     camera.position.z = 300;
 
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
+    // Members Data
+    const members = [
+      { name: "Will", lat: 13.7563, lng: 100.5018 },
+      { name: "Maher Hmidan", lat: 13.7663, lng: 100.4918 },
+      { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
+      { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
+      { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 }
+    ];
+
+    // Globe Setup
     const globe = new ThreeGlobe()
-      .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-dark.jpg')
-      .pointsData([
-        { name: "Will", lat: 13.7563, lng: 100.5018 },
-        { name: "Maher Hmidan", lat: 13.7663, lng: 100.4918 },
-        { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
-        { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
-        { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 }
-      ])
+      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg')
+      .pointsData(members)
       .pointLat(d => d.lat)
       .pointLng(d => d.lng)
       .pointAltitude(0.04)
@@ -44,14 +64,18 @@
 
     scene.add(globe);
 
+    // Lighting
     const light = new THREE.AmbientLight(0xffffff);
     scene.add(light);
 
+    // Orbit Controls with Auto-Rotate
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableZoom = true;
+    controls.enablePan = false;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.6;
-    controls.enableZoom = false;
+    controls.autoRotateSpeed = 1.0;
 
+    // Animation Loop
     function animate() {
       requestAnimationFrame(animate);
       controls.update();
