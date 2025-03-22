@@ -1,74 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Willionaire Globe</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        overflow: hidden;
-        background: #000;
-        width: 100%;
-        height: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <script src="three.min.js"></script>
-    <script src="three-globe.min.js"></script>
-    <script src="OrbitControls.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <title>Willionaire Globe</title>
+  <style>
+    html, body {
+      margin: 0;
+      overflow: hidden;
+      background: #000;
+      width: 100%;
+      height: 100%;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <script src="three.min.js"></script>
+  <script src="three-globe.min.js"></script>
+  <script src="OrbitControls.js"></script>
+  <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera();
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    camera.position.z = 300;
 
-    <script>
-      const scene = new THREE.Scene();
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
-      const camera = new THREE.PerspectiveCamera();
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      camera.position.z = 300;
+    const Globe = new ThreeGlobe()
+      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+      .pointLat(d => d.lat)
+      .pointLng(d => d.lng)
+      .pointAltitude(0.04)
+      .pointRadius(0.5)
+      .pointColor(() => 'white');
 
-      const renderer = new THREE.WebGLRenderer({ antialias: true });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      document.body.appendChild(renderer.domElement);
+    scene.add(Globe);
 
-      const Globe = new ThreeGlobe()
-        .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-        .pointLat('lat')
-        .pointLng('lng')
-        .pointAltitude(0.04)
-        .pointRadius(0.5)
-        .pointColor(() => 'white');
+    const ambientLight = new THREE.AmbientLight(0xbbbbbb);
+    scene.add(ambientLight);
 
-      scene.add(Globe);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+    directionalLight.position.set(0, 1, 1);
+    scene.add(directionalLight);
 
-      const members = [
-        { name: "Will", lat: 13.7563, lng: 100.5018 },
-        { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
-        { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
-        { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 }
-      ];
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = -3.0; // Spin opposite and faster
+    controls.enableZoom = true;
+    controls.enablePan = false;
 
-      Globe.pointsData(members);
+    const members = [
+      { name: "Will", lat: 13.7563, lng: 100.5018 },
+      { name: "Maher Hmidan", lat: 13.8563, lng: 100.5018 },
+      { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
+      { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
+      { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 },
+      { name: "Thomas Hutcheson", lat: 13.9563, lng: 100.5018 },
+      { name: "Lennon Odonnel", lat: 14.0563, lng: 100.5018 },
+      { name: "Tom Davies", lat: 14.1563, lng: 100.5018 },
+      { name: "Adam Matousek", lat: 14.2563, lng: 100.5018 },
+      { name: "Luke Boshart", lat: 14.3563, lng: 100.5018 },
+      { name: "Aiden Wise", lat: 14.4563, lng: 100.5018 },
+      // Others with no location will be placed around lat 0 with slight offset
+      { name: "Julius Inno", lat: 0.0, lng: 0 },
+      { name: "Jay Walker", lat: 0.1, lng: 0 },
+      { name: "Anton Marshall", lat: 0.2, lng: 0 },
+      { name: "Alfie Wareing", lat: 0.3, lng: 0 },
+      { name: "Jared Deacon", lat: 0.4, lng: 0 },
+      { name: "Nick Rielbet", lat: 0.5, lng: 0 },
+      { name: "Richard Thompson", lat: 0.6, lng: 0 },
+      { name: "Leonardo", lat: 0.7, lng: 0 },
+      { name: "Luke Jeffery", lat: 0.8, lng: 0 },
+      { name: "Tully Skett", lat: 0.9, lng: 0 },
+      { name: "Simon Kaseberg", lat: 1.0, lng: 0 },
+      { name: "Scott Herny", lat: 1.1, lng: 0 },
+      { name: "Sam Tindall", lat: 1.2, lng: 0 },
+      { name: "Ryan Aherne", lat: 1.3, lng: 0 },
+      { name: "Ned Sainsbury Plaice", lat: 1.4, lng: 0 },
+      { name: "Mordecai", lat: 1.5, lng: 0 },
+      { name: "Jake Hitchner", lat: 1.6, lng: 0 },
+      { name: "Jakob Keane", lat: 1.7, lng: 0 },
+      { name: "Kasim", lat: 1.8, lng: 0 },
+      { name: "Jithin Baiju", lat: 1.9, lng: 0 },
+      { name: "Jose Vitor", lat: 2.0, lng: 0 },
+      { name: "Aleksandar Chetelyazov", lat: 2.1, lng: 0 },
+      { name: "Thomas Green", lat: 2.2, lng: 0 },
+      { name: "Ben Oakley", lat: 2.3, lng: 0 },
+      { name: "Harrison Bowtell", lat: 2.4, lng: 0 },
+      { name: "Daniel Mooney", lat: 2.5, lng: 0 },
+      { name: "Luke Walters", lat: 2.6, lng: 0 },
+      { name: "Liam Vickerage", lat: 2.7, lng: 0 },
+      { name: "Nick Somma", lat: 2.8, lng: 0 },
+      { name: "Issac", lat: 2.9, lng: 0 },
+      { name: "Milo Dowling", lat: 3.0, lng: 0 },
+      { name: "Arron Adamson", lat: 3.1, lng: 0 },
+      { name: "Kacper Predich", lat: 3.2, lng: 0 },
+      { name: "Nelsons Ononivu", lat: 3.3, lng: 0 },
+      { name: "Rowan Edwin", lat: 3.4, lng: 0 },
+      { name: "Alex Shaw", lat: 3.5, lng: 0 },
+      { name: "Orlando Santucci", lat: 3.6, lng: 0 },
+      { name: "Jordan Bailey", lat: 3.7, lng: 0 },
+      { name: "Lee Valentine", lat: 3.8, lng: 0 }
+    ];
 
-      // Orbit controls
-      const controls = new THREE.OrbitControls(camera, renderer.domElement);
-      controls.enableZoom = true;
-      controls.enableRotate = true;
-      controls.autoRotate = true;
-      controls.autoRotateSpeed = -4.0; // Spin faster & reversed
-      controls.zoomSpeed = 0.8;
+    Globe.pointsData(members);
 
-      // Lighting
-      const light = new THREE.AmbientLight(0xffffff);
-      scene.add(light);
-
-      function animate() {
-        requestAnimationFrame(animate);
-        controls.update();
-        renderer.render(scene, camera);
-      }
-
-      animate();
-    </script>
-  </body>
+    function animate() {
+      controls.update();
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
 </html>
