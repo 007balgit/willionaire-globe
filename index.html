@@ -23,7 +23,6 @@
 
   <script>
     const scene = new THREE.Scene();
-
     const camera = new THREE.PerspectiveCamera();
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -38,7 +37,7 @@
       .pointLat(d => d.lat)
       .pointLng(d => d.lng)
       .pointAltitude(0.03)
-      .pointRadius(0.1)
+      .pointRadius(0.05)
       .pointColor(() => 'white');
 
     scene.add(Globe);
@@ -57,51 +56,56 @@
     controls.autoRotateSpeed = -3.0;
 
     const members = [
-      { name: "Will", lat: 13.7563, lng: 100.5018 },
-      { name: "Maher Hmidan", lat: 13.7367, lng: 100.5231 },
-      { name: "Piero Ladhur", lat: 25.2048, lng: 55.2708 },
-      { name: "Jack Ormonroyd", lat: 53.8008, lng: -1.5491 },
-      { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 },
-      { name: "Thomas Hutcheson", lat: 54.5973, lng: -5.9301 },
-      { name: "Lennon Odonnel", lat: 53.4808, lng: -2.2426 },
-      { name: "Nick Rielbet", lat: 48.8566, lng: 2.3522 },
-      { name: "Richard Thompson", lat: 53.4084, lng: -2.9916 },
-      { name: "Leonardo", lat: 52.52, lng: 13.4050 },
-      { name: "Luke Jeffery", lat: 50.1109, lng: 8.6821 },
-      { name: "Tully Skett", lat: 53.0027, lng: -2.1794 },
-      { name: "Tom Davies", lat: 51.4816, lng: -3.1791 },
-      { name: "Simon Kaseberg", lat: 47.3769, lng: 8.5417 },
-      { name: "Adam Matousek", lat: 50.0755, lng: 14.4378 },
-      { name: "Scott Herny", lat: 51.4545, lng: -2.5879 },
-      { name: "Sam Tindall", lat: 51.7520, lng: -1.2577 },
-      { name: "Ryan Aherne", lat: 53.5258, lng: -7.3389 },
-      { name: "Ned Sainsbury Plaice", lat: 51.4816, lng: -0.1910 },
-      { name: "Mordecai", lat: 51.4545, lng: -0.9781 },
-      { name: "Jake Hitchner", lat: 51.7520, lng: -1.2577 },
-      { name: "Jakob Keane", lat: 52.2053, lng: 0.1218 },
-      { name: "Luke Boshart", lat: 53.3811, lng: -1.4701 },
-      { name: "Kasim", lat: 53.8008, lng: -1.5491 },
-      { name: "Jithin Baiju", lat: 53.4794, lng: -2.2453 },
-      { name: "Jose Vitor", lat: -23.5505, lng: -46.6333 },
-      { name: "Aleksandar Chetelyazov", lat: 42.6977, lng: 23.3219 },
-      { name: "Thomas Green", lat: 53.4084, lng: -2.9916 },
-      { name: "Ben Oakley", lat: 51.4545, lng: -2.5879 },
-      { name: "Harrison Bowtell", lat: 52.4862, lng: -1.8904 },
-      { name: "Daniel Mooney", lat: 53.2707, lng: -9.0568 },
-      { name: "Luke Walters", lat: 51.4816, lng: -3.1791 },
-      { name: "Liam Vickerage", lat: 51.5099, lng: -0.1180 },
-      { name: "Nick Somma", lat: 51.4545, lng: -2.5879 },
-      { name: "Issac", lat: 51.5074, lng: -0.1278 },
-      { name: "Milo Dowling", lat: 51.7520, lng: -1.2577 },
-      { name: "Aiden Wise", lat: 53.8008, lng: -1.5491 },
-      { name: "Arron Adamson", lat: 51.4816, lng: -3.1791 },
-      { name: "Kacper Predich", lat: 52.2297, lng: 21.0122 },
-      { name: "Nelsons Ononivu", lat: 51.5074, lng: -0.1278 },
-      { name: "Rowan Edwin", lat: 53.7267, lng: -0.5669 },
-      { name: "Alex Shaw", lat: 52.2053, lng: 0.1218 },
-      { name: "Orlando Santucci", lat: 51.1657, lng: 10.4515 },
-      { name: "Jordan Bailey", lat: 53.4084, lng: -2.9916 },
-      { name: "Lee Valentine", lat: 53.4808, lng: -2.2426 }
+      { lat: 51.5074, lng: -0.1278 },
+      { lat: 53.4808, lng: -2.2426 },
+      { lat: 53.4084, lng: -2.9916 },
+      { lat: 53.8008, lng: -1.5491 },
+      { lat: 52.4862, lng: -1.8904 },
+      { lat: 51.4545, lng: -2.5879 },
+      { lat: 53.3811, lng: -1.4701 },
+      { lat: 52.2053, lng: 0.1218 },
+      { lat: 51.1657, lng: 10.4515 },
+      { lat: 51.7520, lng: -1.2577 },
+      { lat: 53.2707, lng: -9.0568 },
+      { lat: 50.1109, lng: 8.6821 },
+      { lat: 47.3769, lng: 8.5417 },
+      { lat: 48.8566, lng: 2.3522 },
+      { lat: 42.6977, lng: 23.3219 },
+      { lat: 45.4215, lng: -75.6972 },
+      { lat: 40.7128, lng: -74.0060 },
+      { lat: 34.0522, lng: -118.2437 },
+      { lat: 37.7749, lng: -122.4194 },
+      { lat: -23.5505, lng: -46.6333 },
+      { lat: 25.276987, lng: 55.296249 },
+      { lat: 13.7563, lng: 100.5018 },
+      { lat: 13.7367, lng: 100.5231 },
+      { lat: 14.0583, lng: 100.5083 },
+      { lat: 13.9167, lng: 100.6000 },
+      { lat: 13.8500, lng: 100.6000 },
+      { lat: 13.8167, lng: 100.6167 },
+      { lat: 13.7333, lng: 100.5000 },
+      { lat: 13.8833, lng: 100.6000 },
+      { lat: 13.9000, lng: 100.5333 },
+      { lat: 13.9500, lng: 100.5833 },
+      { lat: 13.8000, lng: 100.5500 },
+      { lat: 13.7667, lng: 100.5667 },
+      { lat: 13.8500, lng: 100.5667 },
+      { lat: 13.9333, lng: 100.5667 },
+      { lat: 13.7167, lng: 100.5000 },
+      { lat: 13.7833, lng: 100.5000 },
+      { lat: 13.8167, lng: 100.5000 },
+      { lat: 13.7333, lng: 100.5500 },
+      { lat: 13.8833, lng: 100.5500 },
+      { lat: 13.9667, lng: 100.5500 },
+      { lat: 13.9667, lng: 100.5000 },
+      { lat: 13.9167, lng: 100.5000 },
+      { lat: 13.9667, lng: 100.6000 },
+      { lat: 13.8167, lng: 100.6000 },
+      { lat: 13.7833, lng: 100.5667 },
+      { lat: 13.8500, lng: 100.5333 },
+      { lat: 13.8000, lng: 100.5833 },
+      { lat: 13.9167, lng: 100.5833 },
+      { lat: 13.7167, lng: 100.5667 }
     ];
 
     Globe.pointsData(members);
