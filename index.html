@@ -25,59 +25,63 @@
 </head>
 <body>
   <div id="tooltip"></div>
+
+  <!-- Load scripts -->
   <script src="three.min.js"></script>
   <script src="three-globe.min.js"></script>
   <script src="OrbitControls.js"></script>
+
   <script>
     const scene = new THREE.Scene();
 
-    const camera = new THREE.PerspectiveCamera();
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 300;
 
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    const members = [
-      { name: "Will", lat: 13.7563, lng: 100.5018 },
-      { name: "Maher Hmidan", lat: 13.7663, lng: 100.4918 },
-      { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
-      { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
-      { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 }
-    ];
-
     const globe = new ThreeGlobe()
-      .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-dark.jpg')
-      .pointsData(members)
+      .globeImageUrl('https://raw.githubusercontent.com/vasturiano/three-globe/master/example/img/earth-blue-marble.jpg') // Green/blue earth
       .pointLat(d => d.lat)
       .pointLng(d => d.lng)
       .pointAltitude(0.04)
       .pointRadius(0.5)
       .pointColor(() => 'white');
 
+    // Add member data (pins)
+    globe.pointsData([
+      { name: "Will", lat: 13.7563, lng: 100.5018 },
+      { name: "Maher Hmidan", lat: 13.7663, lng: 100.4918 },
+      { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
+      { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
+      { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 }
+    ]);
+
     scene.add(globe);
 
-    const light = new THREE.AmbientLight(0xffffff);
-    scene.add(light);
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff);
+    scene.add(ambientLight);
 
+    // Orbit controls
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableZoom = true;
     controls.enableRotate = true;
     controls.enablePan = false;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 1.0;
+    controls.autoRotateSpeed = 0.8;
 
-    // 🔁 Animation loop (needed for auto-rotate to work)
+    // Animate loop
     function animate() {
       requestAnimationFrame(animate);
-      controls.update(); // keeps auto-rotate going
+      controls.update();
       renderer.render(scene, camera);
     }
 
     animate();
 
+    // Responsive resize
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
