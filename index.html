@@ -37,8 +37,8 @@
       .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
       .pointLat(d => d.lat)
       .pointLng(d => d.lng)
-      .pointAltitude(0.03) // Smaller pins (altitude)
-      .pointRadius(0.3)   // Smaller pins (radius)
+      .pointAltitude(0.03) // Smaller pins
+      .pointRadius(0.05)   // Smaller pins
       .pointColor(() => 'white');
 
     scene.add(Globe);
@@ -55,6 +55,8 @@
     controls.enablePan = false;
     controls.autoRotate = true;
     controls.autoRotateSpeed = -3.0; // Faster reverse spin
+
+    const randomOffset = (coord, spread = 0.1) => coord + (Math.random() - 0.5) * spread;
 
     const members = [
       { name: "Will", lat: 13.7563, lng: 100.5018 },
@@ -74,7 +76,7 @@
       { name: "Adam Matousek", lat: 14.7563, lng: 100.5018 },
       { name: "Scott Herny", lat: 14.8563, lng: 100.5018 },
       { name: "Sam Tindall", lat: 14.9563, lng: 100.5018 },
-      { name: "Ryan Aherne", lat: 53.349805, lng: -6.26031 }, // Dublin, Ireland
+      { name: "Ryan Aherne", lat: 53.349805, lng: -6.26031 },
       { name: "Ned Sainsbury Plaice", lat: 15.0563, lng: 100.5018 },
       { name: "Mordecai", lat: 15.1563, lng: 100.5018 },
       { name: "Jake Hitchner", lat: 15.2563, lng: 100.5018 },
@@ -104,7 +106,14 @@
       { name: "Lee Valentine", lat: 17.5563, lng: 100.5018 }
     ];
 
-    Globe.pointsData(members);
+    // Apply random offsets for each member for realistic spread
+    const spreadMembers = members.map(member => ({
+      ...member,
+      lat: randomOffset(member.lat, 0.3), // Random spread on latitude
+      lng: randomOffset(member.lng, 0.3)  // Random spread on longitude
+    }));
+
+    Globe.pointsData(spreadMembers);
 
     function animate() {
       controls.update();
