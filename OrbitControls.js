@@ -1,1 +1,1 @@
-// Real OrbitControls.js from Three.js examples
+// Full version of OrbitControls should go here
