@@ -37,8 +37,8 @@
       .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
       .pointLat(d => d.lat)
       .pointLng(d => d.lng)
-      .pointAltitude(0.06)       // Lifts pins higher
-      .pointRadius(0.2)          // Makes pins thicker
+      .pointAltitude(0.05)       // Lifts pins higher
+      .pointRadius(0.01)          // Makes pins thicker
       .pointColor(() => 'white');
 
     scene.add(Globe);
