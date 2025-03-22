@@ -25,15 +25,12 @@
 </head>
 <body>
   <div id="tooltip"></div>
-
-  <!-- Scripts -->
   <script src="three.min.js"></script>
   <script src="three-globe.min.js"></script>
   <script src="OrbitControls.js"></script>
-
   <script>
-    // Scene and Camera Setup
     const scene = new THREE.Scene();
+
     const camera = new THREE.PerspectiveCamera();
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -43,7 +40,6 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    // Members Data
     const members = [
       { name: "Will", lat: 13.7563, lng: 100.5018 },
       { name: "Maher Hmidan", lat: 13.7663, lng: 100.4918 },
@@ -52,9 +48,8 @@
       { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 }
     ];
 
-    // Globe Setup
     const globe = new ThreeGlobe()
-      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg')
+      .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-dark.jpg')
       .pointsData(members)
       .pointLat(d => d.lat)
       .pointLng(d => d.lng)
@@ -64,25 +59,30 @@
 
     scene.add(globe);
 
-    // Lighting
     const light = new THREE.AmbientLight(0xffffff);
     scene.add(light);
 
-    // Orbit Controls with Auto-Rotate
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableZoom = true;
+    controls.enableRotate = true;
     controls.enablePan = false;
     controls.autoRotate = true;
     controls.autoRotateSpeed = 1.0;
 
-    // Animation Loop
+    // 🔁 Animation loop (needed for auto-rotate to work)
     function animate() {
       requestAnimationFrame(animate);
-      controls.update();
+      controls.update(); // keeps auto-rotate going
       renderer.render(scene, camera);
     }
 
     animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
   </script>
 </body>
 </html>
