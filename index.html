@@ -1,74 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Willionaire Globe</title>
-    <style>
-      html, body {
-        margin: 0;
-        overflow: hidden;
-        background: #000;
-        width: 100%;
-        height: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <script src="three.min.js"></script>
-    <script src="three-globe.min.js"></script>
-    <script src="OrbitControls.js"></script>
-    <script>
-      const scene = new THREE.Scene();
+<head>
+  <meta charset="UTF-8" />
+  <title>Willionaire Globe</title>
+  <style>
+    html, body {
+      margin: 0;
+      overflow: hidden;
+      background: #000;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <script src="three.min.js"></script>
+  <script src="three-globe.min.js"></script>
+  <script src="OrbitControls.js"></script>
+  <script>
+    const scene = new THREE.Scene();
 
-      const camera = new THREE.PerspectiveCamera();
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      camera.position.z = 300;
+    const camera = new THREE.PerspectiveCamera();
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    camera.position.z = 300;
 
-      const renderer = new THREE.WebGLRenderer();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      document.body.appendChild(renderer.domElement);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
-      const Globe = new ThreeGlobe()
-        .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-        .pointLat('lat')
-        .pointLng('lng')
-        .pointAltitude(0.04)
-        .pointRadius(0.5)
-        .pointColor(() => 'white');
+    const Globe = new ThreeGlobe()
+      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+      .pointLat('lat')
+      .pointLng('lng')
+      .pointAltitude(0.04)
+      .pointRadius(0.5)
+      .pointColor(() => 'white');
 
-      scene.add(Globe);
+    scene.add(Globe);
 
-      const ambientLight = new THREE.AmbientLight(0xbbbbbb);
-      scene.add(ambientLight);
+    const members = [
+      { name: "Will", lat: 13.7563, lng: 100.5018 },
+      { name: "Maher Hmidan", lat: 13.7663, lng: 100.4918 },
+      { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
+      { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
+      { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 }
+    ];
 
-      const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
-      directionalLight.position.set(0, 0, 400);
-      scene.add(directionalLight);
+    Globe.pointsData(members);
 
-      const controls = new THREE.OrbitControls(camera, renderer.domElement);
-      controls.enableZoom = true;
-      controls.enablePan = false;
-      controls.autoRotate = true;
-      controls.autoRotateSpeed = 0.4;
+    const ambientLight = new THREE.AmbientLight(0xbbbbbb);
+    scene.add(ambientLight);
 
-      const members = [
-        { name: "Will", lat: 13.7563, lng: 100.5018 },
-        { name: "Maher Hmidan", lat: 13.7663, lng: 100.4918 },
-        { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
-        { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
-        { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 }
-      ];
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+    directionalLight.position.set(0, 0, 400);
+    scene.add(directionalLight);
 
-      Globe.pointsData(members);
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableZoom = true;
+    controls.enablePan = false;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.4;
 
-      function animate() {
-        requestAnimationFrame(animate);
-        controls.update();
-        renderer.render(scene, camera);
-      }
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update(); // Required for autoRotate
+      renderer.render(scene, camera);
+    }
 
-      animate();
-    </script>
-  </body>
+    animate();
+  </script>
+</body>
 </html>
