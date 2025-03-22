@@ -17,6 +17,7 @@
   <script src="three.min.js"></script>
   <script src="three-globe.min.js"></script>
   <script src="OrbitControls.js"></script>
+
   <script>
     const scene = new THREE.Scene();
 
@@ -29,7 +30,7 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    const Globe = new ThreeGlobe()
+    const globe = new ThreeGlobe()
       .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
       .pointLat('lat')
       .pointLng('lng')
@@ -37,7 +38,7 @@
       .pointRadius(0.5)
       .pointColor(() => 'white');
 
-    scene.add(Globe);
+    scene.add(globe);
 
     const members = [
       { name: "Will", lat: 13.7563, lng: 100.5018 },
@@ -46,25 +47,18 @@
       { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
       { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 }
     ];
+    globe.pointsData(members);
 
-    Globe.pointsData(members);
-
-    const ambientLight = new THREE.AmbientLight(0xbbbbbb);
-    scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
-    directionalLight.position.set(0, 0, 400);
-    scene.add(directionalLight);
-
+    // ✅ Orbit controls (drag + zoom + spin)
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableZoom = true;
-    controls.enableRotate = true;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.4;
+    controls.autoRotateSpeed = 0.5;
 
+    // ✅ Animate
     function animate() {
       requestAnimationFrame(animate);
-      controls.update(); // required for orbit + autoRotate
+      controls.update();
       renderer.render(scene, camera);
     }
 
