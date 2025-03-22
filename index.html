@@ -3,7 +3,7 @@
   <head>
     <title>Willionaire Globe</title>
     <style>
-      body { margin: 0; overflow: hidden; }
+      body { margin: 0; overflow: hidden; background: black; }
       canvas { display: block; }
       #tooltip {
         position: absolute;
@@ -19,9 +19,9 @@
   </head>
   <body>
     <div id="tooltip"></div>
-    <script src="https://unpkg.com/three"></script>
-    <script src="https://unpkg.com/three-globe"></script>
-    <script src="https://unpkg.com/three/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://unpkg.com/three@0.150.1/build/three.min.js"></script>
+    <script src="https://unpkg.com/three-globe@2.26.4/dist/three-globe.min.js"></script>
+    <script src="https://unpkg.com/three@0.150.1/examples/js/controls/OrbitControls.js"></script>
     <script>
       const members = [
         { name: "Will", lat: 13.7563, lng: 100.5018 },
@@ -42,13 +42,13 @@
       document.body.appendChild(renderer.domElement);
 
       const globe = new ThreeGlobe()
-        .globeImageUrl('//unpkg.com/three-globe/example/img/earth-dark.jpg')
+        .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-dark.jpg')
         .pointsData(members)
         .pointLat(d => d.lat)
         .pointLng(d => d.lng)
-        .pointAltitude(0.02)
+        .pointAltitude(0.05)
         .pointColor(() => 'white')
-        .pointRadius(0.6);
+        .pointRadius(0.7);
 
       scene.add(globe);
 
@@ -58,10 +58,9 @@
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.enableZoom = false;
       controls.autoRotate = true;
-      controls.autoRotateSpeed = 0.7;
+      controls.autoRotateSpeed = 0.6;
 
       const tooltip = document.getElementById('tooltip');
-
       window.addEventListener('mousemove', (event) => {
         const [x, y] = [event.clientX, event.clientY];
         tooltip.style.left = x + 10 + 'px';
