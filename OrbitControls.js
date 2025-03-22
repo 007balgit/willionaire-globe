@@ -26,3 +26,4 @@ THREE.OrbitControls = function (object, domElement) {
   this.dispose = function () {
     // No-op for minimal version
   };
+};
