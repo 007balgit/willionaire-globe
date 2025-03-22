@@ -20,8 +20,10 @@
   <script src="three.min.js"></script>
   <script src="three-globe.min.js"></script>
   <script src="OrbitControls.js"></script>
+
   <script>
     const scene = new THREE.Scene();
+
     const camera = new THREE.PerspectiveCamera();
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -35,8 +37,8 @@
       .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
       .pointLat(d => d.lat)
       .pointLng(d => d.lng)
-      .pointAltitude(0.04)
-      .pointRadius(0.5)
+      .pointAltitude(0.06)       // Lifts pins higher
+      .pointRadius(0.8)          // Makes pins thicker
       .pointColor(() => 'white');
 
     scene.add(Globe);
@@ -49,24 +51,33 @@
     scene.add(directionalLight);
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = -3.0; // Spin opposite and faster
     controls.enableZoom = true;
     controls.enablePan = false;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = -3.0; // Faster reverse spin
 
+    // Members with spread-out positions
     const members = [
+      // Bangkok - spread out
       { name: "Will", lat: 13.7563, lng: 100.5018 },
       { name: "Maher Hmidan", lat: 13.8563, lng: 100.5018 },
-      { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
-      { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
-      { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 },
       { name: "Thomas Hutcheson", lat: 13.9563, lng: 100.5018 },
       { name: "Lennon Odonnel", lat: 14.0563, lng: 100.5018 },
       { name: "Tom Davies", lat: 14.1563, lng: 100.5018 },
       { name: "Adam Matousek", lat: 14.2563, lng: 100.5018 },
       { name: "Luke Boshart", lat: 14.3563, lng: 100.5018 },
       { name: "Aiden Wise", lat: 14.4563, lng: 100.5018 },
-      // Others with no location will be placed around lat 0 with slight offset
+
+      // Dubai
+      { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
+
+      // London/Marbella
+      { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
+
+      // Tulum
+      { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 },
+
+      // Everyone else (placed along equator, slightly spaced)
       { name: "Julius Inno", lat: 0.0, lng: 0 },
       { name: "Jay Walker", lat: 0.1, lng: 0 },
       { name: "Anton Marshall", lat: 0.2, lng: 0 },
@@ -115,6 +126,7 @@
       renderer.render(scene, camera);
       requestAnimationFrame(animate);
     }
+
     animate();
   </script>
 </body>
