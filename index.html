@@ -1,15 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <title>Willionaire Globe</title>
     <style>
-      body { margin: 0; overflow: hidden; background: black; }
-      canvas { display: block; }
+      html, body {
+        margin: 0;
+        overflow: hidden;
+        background: #000;
+        width: 100%;
+        height: 100%;
+      }
       #tooltip {
         position: absolute;
         background: white;
         color: black;
-        padding: 4px 8px;
+        padding: 5px 10px;
         border-radius: 5px;
         font-size: 12px;
         pointer-events: none;
@@ -19,18 +25,10 @@
   </head>
   <body>
     <div id="tooltip"></div>
-    <script src="https://unpkg.com/three@0.150.1/build/three.min.js"></script>
-    <script src="https://unpkg.com/three-globe@2.26.4/dist/three-globe.min.js"></script>
-    <script src="https://unpkg.com/three@0.150.1/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.141.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three-globe@2.24.11/dist/three-globe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.141.0/examples/js/controls/OrbitControls.js"></script>
     <script>
-      const members = [
-        { name: "Will", lat: 13.7563, lng: 100.5018 },
-        { name: "Maher Hmidan", lat: 13.7663, lng: 100.4918 },
-        { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
-        { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
-        { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 }
-      ];
-
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera();
       camera.aspect = window.innerWidth / window.innerHeight;
@@ -41,33 +39,40 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
 
-      const globe = new ThreeGlobe()
+      const members = [
+        { name: "Will", lat: 13.7563, lng: 100.5018 },
+        { name: "Maher Hmidan", lat: 13.7663, lng: 100.4918 },
+        { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
+        { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
+        { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 }
+      ];
+
+      const Globe = new ThreeGlobe()
         .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-dark.jpg')
         .pointsData(members)
         .pointLat(d => d.lat)
         .pointLng(d => d.lng)
-        .pointAltitude(0.05)
+        .pointAltitude(0.04)
         .pointColor(() => 'white')
-        .pointRadius(0.7);
+        .pointRadius(0.5);
 
-      scene.add(globe);
+      scene.add(Globe);
 
-      const light = new THREE.AmbientLight(0xffffff);
-      scene.add(light);
+      const ambientLight = new THREE.AmbientLight(0xffffff);
+      scene.add(ambientLight);
 
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
-      controls.enableZoom = false;
       controls.autoRotate = true;
       controls.autoRotateSpeed = 0.6;
+      controls.enableZoom = false;
 
       const tooltip = document.getElementById('tooltip');
       window.addEventListener('mousemove', (event) => {
-        const [x, y] = [event.clientX, event.clientY];
-        tooltip.style.left = x + 10 + 'px';
-        tooltip.style.top = y + 10 + 'px';
+        tooltip.style.left = (event.clientX + 10) + 'px';
+        tooltip.style.top = (event.clientY + 10) + 'px';
       });
 
-      globe.onPointHover(point => {
+      Globe.onPointHover(point => {
         if (point) {
           tooltip.innerText = point.name;
           tooltip.style.display = 'block';
