@@ -58,13 +58,13 @@
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableZoom = true;
-    controls.enablePan = false;
+    controls.enableRotate = true;
     controls.autoRotate = true;
     controls.autoRotateSpeed = 0.4;
 
     function animate() {
       requestAnimationFrame(animate);
-      controls.update(); // Required for autoRotate
+      controls.update(); // required for orbit + autoRotate
       renderer.render(scene, camera);
     }
 
