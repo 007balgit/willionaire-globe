@@ -37,8 +37,8 @@
       .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
       .pointLat(d => d.lat)
       .pointLng(d => d.lng)
-      .pointAltitude(0.05)       // Lifts pins higher
-      .pointRadius(0.01)          // Makes pins thicker
+      .pointAltitude(0.03) // Smaller pins (altitude)
+      .pointRadius(0.3)   // Smaller pins (radius)
       .pointColor(() => 'white');
 
     scene.add(Globe);
@@ -56,67 +56,51 @@
     controls.autoRotate = true;
     controls.autoRotateSpeed = -3.0; // Faster reverse spin
 
-    // Members with spread-out positions
     const members = [
-      // Bangkok - spread out
       { name: "Will", lat: 13.7563, lng: 100.5018 },
-      { name: "Maher Hmidan", lat: 13.8563, lng: 100.5018 },
-      { name: "Thomas Hutcheson", lat: 13.9563, lng: 100.5018 },
-      { name: "Lennon Odonnel", lat: 14.0563, lng: 100.5018 },
-      { name: "Tom Davies", lat: 14.1563, lng: 100.5018 },
-      { name: "Adam Matousek", lat: 14.2563, lng: 100.5018 },
-      { name: "Luke Boshart", lat: 14.3563, lng: 100.5018 },
-      { name: "Aiden Wise", lat: 14.4563, lng: 100.5018 },
-
-      // Dubai
+      { name: "Maher Hmidan", lat: 13.7563, lng: 100.5018 },
       { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
-
-      // London/Marbella
       { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
-
-      // Tulum
       { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 },
-
-      // Everyone else (placed along equator, slightly spaced)
-      { name: "Julius Inno", lat: 0.0, lng: 0 },
-      { name: "Jay Walker", lat: 0.1, lng: 0 },
-      { name: "Anton Marshall", lat: 0.2, lng: 0 },
-      { name: "Alfie Wareing", lat: 0.3, lng: 0 },
-      { name: "Jared Deacon", lat: 0.4, lng: 0 },
-      { name: "Nick Rielbet", lat: 0.5, lng: 0 },
-      { name: "Richard Thompson", lat: 0.6, lng: 0 },
-      { name: "Leonardo", lat: 0.7, lng: 0 },
-      { name: "Luke Jeffery", lat: 0.8, lng: 0 },
-      { name: "Tully Skett", lat: 0.9, lng: 0 },
-      { name: "Simon Kaseberg", lat: 1.0, lng: 0 },
-      { name: "Scott Herny", lat: 1.1, lng: 0 },
-      { name: "Sam Tindall", lat: 1.2, lng: 0 },
-      { name: "Ryan Aherne", lat: 1.3, lng: 0 },
-      { name: "Ned Sainsbury Plaice", lat: 1.4, lng: 0 },
-      { name: "Mordecai", lat: 1.5, lng: 0 },
-      { name: "Jake Hitchner", lat: 1.6, lng: 0 },
-      { name: "Jakob Keane", lat: 1.7, lng: 0 },
-      { name: "Kasim", lat: 1.8, lng: 0 },
-      { name: "Jithin Baiju", lat: 1.9, lng: 0 },
-      { name: "Jose Vitor", lat: 2.0, lng: 0 },
-      { name: "Aleksandar Chetelyazov", lat: 2.1, lng: 0 },
-      { name: "Thomas Green", lat: 2.2, lng: 0 },
-      { name: "Ben Oakley", lat: 2.3, lng: 0 },
-      { name: "Harrison Bowtell", lat: 2.4, lng: 0 },
-      { name: "Daniel Mooney", lat: 2.5, lng: 0 },
-      { name: "Luke Walters", lat: 2.6, lng: 0 },
-      { name: "Liam Vickerage", lat: 2.7, lng: 0 },
-      { name: "Nick Somma", lat: 2.8, lng: 0 },
-      { name: "Issac", lat: 2.9, lng: 0 },
-      { name: "Milo Dowling", lat: 3.0, lng: 0 },
-      { name: "Arron Adamson", lat: 3.1, lng: 0 },
-      { name: "Kacper Predich", lat: 3.2, lng: 0 },
-      { name: "Nelsons Ononivu", lat: 3.3, lng: 0 },
-      { name: "Rowan Edwin", lat: 3.4, lng: 0 },
-      { name: "Alex Shaw", lat: 3.5, lng: 0 },
-      { name: "Orlando Santucci", lat: 3.6, lng: 0 },
-      { name: "Jordan Bailey", lat: 3.7, lng: 0 },
-      { name: "Lee Valentine", lat: 3.8, lng: 0 }
+      { name: "Thomas Hutcheson", lat: 13.7563, lng: 100.5018 },
+      { name: "Lennon Odonnel", lat: 13.7563, lng: 100.5018 },
+      { name: "Nick Rielbet", lat: 13.7563, lng: 100.5018 },
+      { name: "Richard Thompson", lat: 13.7563, lng: 100.5018 },
+      { name: "Leonardo", lat: 13.7563, lng: 100.5018 },
+      { name: "Luke Jeffery", lat: 13.7563, lng: 100.5018 },
+      { name: "Tully Skett", lat: 13.7563, lng: 100.5018 },
+      { name: "Tom Davies", lat: 13.7563, lng: 100.5018 },
+      { name: "Simon Kaseberg", lat: 13.7563, lng: 100.5018 },
+      { name: "Adam Matousek", lat: 13.7563, lng: 100.5018 },
+      { name: "Scott Herny", lat: 13.7563, lng: 100.5018 },
+      { name: "Sam Tindall", lat: 13.7563, lng: 100.5018 },
+      { name: "Ryan Aherne", lat: 13.7563, lng: 100.5018 },
+      { name: "Ned Sainsbury Plaice", lat: 13.7563, lng: 100.5018 },
+      { name: "Mordecai", lat: 13.7563, lng: 100.5018 },
+      { name: "Jake Hitchner", lat: 13.7563, lng: 100.5018 },
+      { name: "Jakob Keane", lat: 13.7563, lng: 100.5018 },
+      { name: "Kasim", lat: 13.7563, lng: 100.5018 },
+      { name: "Jithin Baiju", lat: 13.7563, lng: 100.5018 },
+      { name: "Jose Vitor", lat: 13.7563, lng: 100.5018 },
+      { name: "Aleksandar Chetelyazov", lat: 13.7563, lng: 100.5018 },
+      { name: "Thomas Green", lat: 13.7563, lng: 100.5018 },
+      { name: "Ben Oakley", lat: 13.7563, lng: 100.5018 },
+      { name: "Harrison Bowtell", lat: 13.7563, lng: 100.5018 },
+      { name: "Daniel Mooney", lat: 13.7563, lng: 100.5018 },
+      { name: "Luke Walters", lat: 13.7563, lng: 100.5018 },
+      { name: "Liam Vickerage", lat: 13.7563, lng: 100.5018 },
+      { name: "Nick Somma", lat: 13.7563, lng: 100.5018 },
+      { name: "Issac", lat: 13.7563, lng: 100.5018 },
+      { name: "Milo Dowling", lat: 13.7563, lng: 100.5018 },
+      { name: "Aiden Wise", lat: 13.7563, lng: 100.5018 },
+      { name: "Arron Adamson", lat: 13.7563, lng: 100.5018 },
+      { name: "Kacper Predich", lat: 13.7563, lng: 100.5018 },
+      { name: "Nelsons Ononivu", lat: 13.7563, lng: 100.5018 },
+      { name: "Rowan Edwin", lat: 13.7563, lng: 100.5018 },
+      { name: "Alex Shaw", lat: 13.7563, lng: 100.5018 },
+      { name: "Orlando Santucci", lat: 13.7563, lng: 100.5018 },
+      { name: "Jordan Bailey", lat: 13.7563, lng: 100.5018 },
+      { name: "Lee Valentine", lat: 13.7563, lng: 100.5018 }
     ];
 
     Globe.pointsData(members);
