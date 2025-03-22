@@ -38,7 +38,7 @@
       .pointLat(d => d.lat)
       .pointLng(d => d.lng)
       .pointAltitude(0.03) // Smaller pins
-      .pointRadius(0.05)   // Smaller pins
+      .pointRadius(0.3)   // Smaller pins
       .pointColor(() => 'white');
 
     scene.add(Globe);
@@ -56,7 +56,7 @@
     controls.autoRotate = true;
     controls.autoRotateSpeed = -3.0; // Faster reverse spin
 
-    const randomOffset = (coord, spread = 0.1) => coord + (Math.random() - 0.5) * spread;
+    const randomOffset = (coord, spread = 1.0) => coord + (Math.random() - 0.5) * spread; // Larger spread
 
     const members = [
       { name: "Will", lat: 13.7563, lng: 100.5018 },
@@ -109,8 +109,8 @@
     // Apply random offsets for each member for realistic spread
     const spreadMembers = members.map(member => ({
       ...member,
-      lat: randomOffset(member.lat, 0.3), // Random spread on latitude
-      lng: randomOffset(member.lng, 0.3)  // Random spread on longitude
+      lat: randomOffset(member.lat, 0.6), // Increased spread for better separation
+      lng: randomOffset(member.lng, 0.6)  // Increased spread for better separation
     }));
 
     Globe.pointsData(spreadMembers);
