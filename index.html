@@ -14,11 +14,13 @@
   </style>
 </head>
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three-globe"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/OrbitControls.js"></script>
+  <script src="three.min.js"></script>
+  <script src="three-globe.min.js"></script>
+  <script src="OrbitControls.js"></script>
+
   <script>
     const scene = new THREE.Scene();
+
     const camera = new THREE.PerspectiveCamera();
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -28,8 +30,7 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    // Globe
-    const Globe = new ThreeGlobe()
+    const globe = new ThreeGlobe()
       .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
       .pointLat('lat')
       .pointLng('lng')
@@ -37,9 +38,8 @@
       .pointRadius(0.5)
       .pointColor(() => 'white');
 
-    scene.add(Globe);
+    scene.add(globe);
 
-    // Points
     const members = [
       { name: "Will", lat: 13.7563, lng: 100.5018 },
       { name: "Maher Hmidan", lat: 13.7663, lng: 100.4918 },
@@ -47,22 +47,15 @@
       { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
       { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 }
     ];
-    Globe.pointsData(members);
+    globe.pointsData(members);
 
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xbbbbbb);
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
-    directionalLight.position.set(1, 1, 1);
-    scene.add(ambientLight);
-    scene.add(directionalLight);
-
-    // Controls
+    // ✅ Orbit controls (drag + zoom + spin)
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableZoom = true;
     controls.autoRotate = true;
     controls.autoRotateSpeed = 0.5;
 
-    // Animate
+    // ✅ Animate
     function animate() {
       requestAnimationFrame(animate);
       controls.update();
