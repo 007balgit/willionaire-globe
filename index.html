@@ -1,81 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Willionaire Globe</title>
-  <style>
-    html, body {
-      margin: 0;
-      overflow: hidden;
-      background: #000;
-      width: 100%;
-      height: 100%;
-    }
-  </style>
-</head>
-<body>
-  <!-- Scripts -->
-  <script src="three.min.js"></script>
-  <script src="three-globe.min.js"></script>
-  <script src="OrbitControls.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Willionaire Globe</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: #000;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="three.min.js"></script>
+    <script src="three-globe.min.js"></script>
+    <script src="OrbitControls.js"></script>
 
-  <script>
-    const scene = new THREE.Scene();
+    <script>
+      const scene = new THREE.Scene();
 
-    const camera = new THREE.PerspectiveCamera();
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    camera.position.z = 300;
+      const camera = new THREE.PerspectiveCamera();
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      camera.position.z = 300;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
 
-    // Create globe
-    const globe = new ThreeGlobe()
-      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-      .pointLat('lat')
-      .pointLng('lng')
-      .pointAltitude(0.04)
-      .pointRadius(0.5)
-      .pointColor(() => 'white');
+      const Globe = new ThreeGlobe()
+        .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+        .pointLat('lat')
+        .pointLng('lng')
+        .pointAltitude(0.04)
+        .pointRadius(0.5)
+        .pointColor(() => 'white');
 
-    scene.add(globe);
+      scene.add(Globe);
 
-    // Sample members
-    const members = [
-      { name: "Will", lat: 13.7563, lng: 100.5018 },
-      { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
-      { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
-      { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 }
-    ];
+      const members = [
+        { name: "Will", lat: 13.7563, lng: 100.5018 },
+        { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
+        { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
+        { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 }
+      ];
 
-    globe.pointsData(members);
+      Globe.pointsData(members);
 
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xbbbbbb);
-    scene.add(ambientLight);
+      // Orbit controls
+      const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableZoom = true;
+      controls.enableRotate = true;
+      controls.autoRotate = true;
+      controls.autoRotateSpeed = -4.0; // Spin faster & reversed
+      controls.zoomSpeed = 0.8;
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
-    directionalLight.position.set(0, 0, 400);
-    scene.add(directionalLight);
+      // Lighting
+      const light = new THREE.AmbientLight(0xffffff);
+      scene.add(light);
 
-    // Orbit controls
-    const controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.enableZoom = true;
-    controls.enableRotate = true;
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 2.0; // Spin speed
-    controls.zoomSpeed = 0.8;
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+      }
 
-    // Animate
-    function animate() {
-      requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
-    }
-
-    animate();
-  </script>
-</body>
+      animate();
+    </script>
+  </body>
 </html>
