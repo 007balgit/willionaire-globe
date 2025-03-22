@@ -37,8 +37,8 @@
       .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
       .pointLat(d => d.lat)
       .pointLng(d => d.lng)
-      .pointAltitude(0.03) // Smaller pins
-      .pointRadius(0.1)   // Smaller pins
+      .pointAltitude(0.03)
+      .pointRadius(0.1)
       .pointColor(() => 'white');
 
     scene.add(Globe);
@@ -54,66 +54,57 @@
     controls.enableZoom = true;
     controls.enablePan = false;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = -3.0; // Faster reverse spin
-
-    const randomOffset = (coord, spread = 1.0) => coord + (Math.random() - 0.5) * spread; // Larger spread
+    controls.autoRotateSpeed = -3.0;
 
     const members = [
       { name: "Will", lat: 13.7563, lng: 100.5018 },
-      { name: "Maher Hmidan", lat: 13.8563, lng: 100.5018 },
-      { name: "Piero Ladhur", lat: 25.276987, lng: 55.296249 },
+      { name: "Maher Hmidan", lat: 25.276987, lng: 55.296249 },
+      { name: "Piero Ladhur", lat: 40.7128, lng: -74.0060 },
       { name: "Jack Ormonroyd", lat: 51.5074, lng: -0.1278 },
       { name: "Jaime Riosvelasco", lat: 20.2114, lng: -87.4656 },
-      { name: "Thomas Hutcheson", lat: 13.9563, lng: 100.5018 },
-      { name: "Lennon Odonnel", lat: 14.0563, lng: 100.5018 },
-      { name: "Nick Rielbet", lat: 14.1563, lng: 100.5018 },
-      { name: "Richard Thompson", lat: 14.2563, lng: 100.5018 },
-      { name: "Leonardo", lat: 14.3563, lng: 100.5018 },
-      { name: "Luke Jeffery", lat: 14.4563, lng: 100.5018 },
-      { name: "Tully Skett", lat: 14.5563, lng: 100.5018 },
-      { name: "Tom Davies", lat: 14.6563, lng: 100.5018 },
-      { name: "Simon Kaseberg", lat: 48.1351, lng: 11.5820 },
-      { name: "Adam Matousek", lat: 14.7563, lng: 100.5018 },
-      { name: "Scott Herny", lat: 14.8563, lng: 100.5018 },
-      { name: "Sam Tindall", lat: 14.9563, lng: 100.5018 },
-      { name: "Ryan Aherne", lat: 53.349805, lng: -6.26031 },
-      { name: "Ned Sainsbury Plaice", lat: 15.0563, lng: 100.5018 },
-      { name: "Mordecai", lat: 15.1563, lng: 100.5018 },
-      { name: "Jake Hitchner", lat: 15.2563, lng: 100.5018 },
-      { name: "Jakob Keane", lat: 15.3563, lng: 100.5018 },
-      { name: "Luke Boshart", lat: 15.4563, lng: 100.5018 },
-      { name: "Kasim", lat: 15.5563, lng: 100.5018 },
-      { name: "Jithin Baiju", lat: 15.6563, lng: 100.5018 },
-      { name: "Jose Vitor", lat: 15.7563, lng: 100.5018 },
-      { name: "Aleksandar Chetelyazov", lat: 15.8563, lng: 100.5018 },
-      { name: "Thomas Green", lat: 15.9563, lng: 100.5018 },
-      { name: "Ben Oakley", lat: 16.0563, lng: 100.5018 },
-      { name: "Harrison Bowtell", lat: 16.1563, lng: 100.5018 },
-      { name: "Daniel Mooney", lat: 16.2563, lng: 100.5018 },
-      { name: "Luke Walters", lat: 16.3563, lng: 100.5018 },
-      { name: "Liam Vickerage", lat: 16.4563, lng: 100.5018 },
-      { name: "Nick Somma", lat: 16.5563, lng: 100.5018 },
-      { name: "Issac", lat: 16.6563, lng: 100.5018 },
-      { name: "Milo Dowling", lat: 16.7563, lng: 100.5018 },
-      { name: "Aiden Wise", lat: 14.4563, lng: 100.5018 },
-      { name: "Arron Adamson", lat: 16.8563, lng: 100.5018 },
-      { name: "Kacper Predich", lat: 16.9563, lng: 100.5018 },
-      { name: "Nelsons Ononivu", lat: 17.0563, lng: 100.5018 },
-      { name: "Rowan Edwin", lat: 17.1563, lng: 100.5018 },
-      { name: "Alex Shaw", lat: 17.2563, lng: 100.5018 },
-      { name: "Orlando Santucci", lat: 17.3563, lng: 100.5018 },
-      { name: "Jordan Bailey", lat: 17.4563, lng: 100.5018 },
-      { name: "Lee Valentine", lat: 17.5563, lng: 100.5018 }
+      { name: "Thomas Hutcheson", lat: 55.9533, lng: -3.1883 },
+      { name: "Lennon Odonnel", lat: 53.349805, lng: -6.26031 },
+      { name: "Nick Rielbet", lat: 48.8566, lng: 2.3522 },
+      { name: "Richard Thompson", lat: 41.9028, lng: 12.4964 },
+      { name: "Leonardo", lat: -23.5505, lng: -46.6333 },
+      { name: "Luke Jeffery", lat: -33.8688, lng: 151.2093 },
+      { name: "Tully Skett", lat: 35.6895, lng: 139.6917 },
+      { name: "Tom Davies", lat: 1.3521, lng: 103.8198 },
+      { name: "Simon Kaseberg", lat: 52.52, lng: 13.4050 },
+      { name: "Adam Matousek", lat: 50.0755, lng: 14.4378 },
+      { name: "Scott Herny", lat: 40.4168, lng: -3.7038 },
+      { name: "Sam Tindall", lat: 55.8642, lng: -4.2518 },
+      { name: "Ryan Aherne", lat: 53.6100, lng: -7.3389 },
+      { name: "Ned Sainsbury Plaice", lat: 34.0522, lng: -118.2437 },
+      { name: "Mordecai", lat: 39.9042, lng: 116.4074 },
+      { name: "Jake Hitchner", lat: 52.2297, lng: 21.0122 },
+      { name: "Jakob Keane", lat: 50.1109, lng: 8.6821 },
+      { name: "Luke Boshart", lat: 41.3851, lng: 2.1734 },
+      { name: "Kasim", lat: 35.6762, lng: 139.6503 },
+      { name: "Jithin Baiju", lat: 28.6139, lng: 77.2090 },
+      { name: "Jose Vitor", lat: -22.9068, lng: -43.1729 },
+      { name: "Aleksandar Chetelyazov", lat: 42.6975, lng: 23.3242 },
+      { name: "Thomas Green", lat: 37.7749, lng: -122.4194 },
+      { name: "Ben Oakley", lat: 45.4215, lng: -75.6972 },
+      { name: "Harrison Bowtell", lat: -36.8485, lng: 174.7633 },
+      { name: "Daniel Mooney", lat: 31.7683, lng: 35.2137 },
+      { name: "Luke Walters", lat: 38.7223, lng: -9.1393 },
+      { name: "Liam Vickerage", lat: 40.6401, lng: 22.9444 },
+      { name: "Nick Somma", lat: 41.0082, lng: 28.9784 },
+      { name: "Issac", lat: 19.4326, lng: -99.1332 },
+      { name: "Milo Dowling", lat: 59.3293, lng: 18.0686 },
+      { name: "Aiden Wise", lat: 60.1695, lng: 24.9354 },
+      { name: "Arron Adamson", lat: 30.0444, lng: 31.2357 },
+      { name: "Kacper Predich", lat: 52.4064, lng: 16.9252 },
+      { name: "Nelsons Ononivu", lat: 6.5244, lng: 3.3792 },
+      { name: "Rowan Edwin", lat: 53.7267, lng: -0.5669 },
+      { name: "Alex Shaw", lat: 52.2053, lng: 0.1218 },
+      { name: "Orlando Santucci", lat: 43.7696, lng: 11.2558 },
+      { name: "Jordan Bailey", lat: 50.9375, lng: 6.9603 },
+      { name: "Lee Valentine", lat: 35.6895, lng: 139.6917 }
     ];
 
-    // Apply random offsets for each member for realistic spread
-    const spreadMembers = members.map(member => ({
-      ...member,
-      lat: randomOffset(member.lat, 0.6), // Increased spread for better separation
-      lng: randomOffset(member.lng, 0.6)  // Increased spread for better separation
-    }));
-
-    Globe.pointsData(spreadMembers);
+    Globe.pointsData(members);
 
     function animate() {
       controls.update();
